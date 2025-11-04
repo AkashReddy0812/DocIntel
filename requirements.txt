@@ -1,0 +1,44 @@
+# ------------------------------
+# DocIntel - LLM-based Document Analysis System
+# ------------------------------
+
+# Phase 1: Document upload & text extraction
+pymupdf
+pdfplumber
+python-docx
+
+# Phase 2: Chunking & embeddings
+sentence-transformers
+numpy
+pandas
+
+# Phase 3: Vector storage
+chromadb
+faiss-cpu
+
+# Phase 4: LLM integration (Ollama local models)
+ollama
+
+# Phase 5: Retrieval-Augmented Generation
+langchain
+langchain-community
+
+# Phase 6: Metadata extraction (NER + classification)
+spacy
+scikit-learn
+
+# Phase 7: Backend (FastAPI)
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Phase 8: Frontend / Interface
+gradio
+
+# Phase 9: Deployment / Utilities
+requests
+pydantic
+tqdm
+
+# Optional: Visualization & Debug
+matplotlib

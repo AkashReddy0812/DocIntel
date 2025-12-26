@@ -1,10 +1,14 @@
+# chunking_embedding/embedder.py
+
 from sentence_transformers import SentenceTransformer
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+class Embedder:
+    def __init__(self, model_name="all-MiniLM-L6-v2"):
+        self.model = SentenceTransformer(model_name)
 
-def get_embeddings(text_chunks):
-    return model.encode(text_chunks)
-
-if __name__ == "__main__":
-    chunks = ["DocIntel extracts data", "It uses LLMs for analysis"]
-    print(get_embeddings(chunks).shape)
+    def embed(self, texts):
+        return self.model.encode(
+            texts,
+            normalize_embeddings=True,
+            show_progress_bar=False
+        )

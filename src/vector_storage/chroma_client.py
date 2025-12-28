@@ -1,27 +1,28 @@
-# vector_storage/chroma_client.py
-
 import chromadb
-from chromadb.config import Settings
 
 class ChromaStore:
-    def __init__(self, collection_name="docs"):
+    def __init__(self, persist_dir="chroma_db"):
         self.client = chromadb.Client(
-            Settings(persist_directory="./chroma_db")
-        )
-        self.collection = self.client.get_or_create_collection(
-            name=collection_name
+            chromadb.config.Settings(
+                persist_directory=persist_dir
+            )
         )
 
-    def add(self, ids, embeddings, documents):
+        self.collection = self.client.get_or_create_collection(
+            name="docintel"
+        )
+
+    def add(self, ids, embeddings, documents, metadatas=None):
         self.collection.add(
             ids=ids,
             embeddings=embeddings,
-            documents=documents
+            documents=documents,
+            metadatas=metadatas
         )
 
     def query(self, embedding, top_k=5):
-        results = self.collection.query(
+        result = self.collection.query(
             query_embeddings=[embedding],
             n_results=top_k
         )
-        return results["documents"][0]
+        return result["documents"][0]

@@ -1,13 +1,32 @@
-# Python cache
+# ======================
+# Python
+# ======================
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# Virtual env
-venv/
 .env/
+venv/
 
+# ======================
+# Frontend / Node
+# ======================
+node_modules/
+src/frontend/node_modules/
+dist/
+src/frontend/dist/
+
+# Lock files (optional but recommended)
+package-lock.json
+bun.lockb
+
+# ======================
+# Gradio / temp
+# ======================
+.gradio/
+
+# ======================
 # OS files
+# ======================
 .DS_Store
 Thumbs.db

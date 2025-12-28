@@ -8,27 +8,43 @@ from src.rag_pipeline.rag_engine import RAGEngine
 
 import uuid
 
-def ingest_pdf(pdf_path):
+
+def ingest_pdf(pdf_path: str):
+    print("[INGEST] Extracting text...")
     raw_text = extract_text_from_pdf(pdf_path)
 
+    print("[INGEST] Chunking text...")
     chunks = chunk_text(raw_text)
 
+    print(f"[INGEST] Total chunks: {len(chunks)}")
+
     embedder = Embedder()
-    embeddings = embedder.embed([c["text"] for c in chunks])
+    texts = [c["text"] for c in chunks]
 
-    store = ChromaStore()
+    print("[INGEST] Generating embeddings...")
+    embeddings = embedder.embed(texts)
 
+    store = ChromaStore()  # MUST be persistent
+
+    print("[INGEST] Storing vectors in Chroma...")
     store.add(
-        ids=[str(uuid.uuid4()) for _ in chunks],
+        ids=[str(uuid.uuid4()) for _ in texts],
         embeddings=embeddings.tolist(),
-        documents=[c["text"] for c in chunks]
+        documents=texts,
+        metadatas=[{"chunk_id": i} for i in range(len(texts))]
     )
 
-def ask(question):
+    print("[INGEST] Completed successfully.")
+
+
+def ask(question: str):
     rag = RAGEngine()
     return rag.query(question)
 
 
 if __name__ == "__main__":
     ingest_pdf("data/samples/sample.pdf")
-    print(ask("What is this document about?"))
+
+    answer = ask("how many phases are there in the document?")
+    print("\n=== ANSWER ===\n")
+    print(answer)

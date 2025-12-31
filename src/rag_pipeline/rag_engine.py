@@ -2,14 +2,16 @@
 
 from src.chunking_embedding.embedder import Embedder
 from src.vector_storage.chroma_client import ChromaStore
-from src.llm_integration.ollama_client import OllamaClient
+from src.llm_integration.groq_client import GroqClient
+
 
 
 class RAGEngine:
     def __init__(self):
         self.embedder = Embedder()
         self.store = ChromaStore()  # MUST point to same persistent DB
-        self.llm = OllamaClient(model="mistral")
+        self.llm = GroqClient(model="llama-3.1-8b-instant")
+
 
     def query(self, question: str, top_k: int = 5) -> str:
         print("[RAG] Embedding query...")

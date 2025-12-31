@@ -30,3 +30,6 @@ bun.lockb
 # ======================
 .DS_Store
 Thumbs.db
+/package.json
+.env
+src/.env
